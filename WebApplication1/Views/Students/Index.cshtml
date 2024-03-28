@@ -1,0 +1,93 @@
+﻿@model IEnumerable<WebApplication1.Models.Student>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table" id="data">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="data-@item.StudentId">
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo)
+                </td>
+                <td>
+                    <img src="@item.ImagePath" width="100" alt="@item.StudentName" />
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.StudentId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.StudentId">Delete</a>
+
+                    <button class="btn  btn-outline-success btn-icon-split" onclick="ajaxDelete(@item.StudentId)">
+                        Ajax Delete
+                    </button>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                Grand Total = @ViewBag.GrandTotal and No of Book is @ViewBag.Count and Average rent amount is @ViewBag.Average
+            </td>
+        </tr>
+    </tfoot>
+</table>
+@section Scripts {
+
+    <script>
+
+        function ajaxDelete(id) {
+
+            var ok = confirm(`Delete invoice?`);
+
+            if (ok) {
+                $.ajax({
+
+                    url: "/DeleteAjax/" + id,
+                    type: "delete",
+                    success: function () {
+                        alert("success");
+                        $('#data-' + id).remove();
+                    }
+                });
+            }
+        }
+    </script>
+}

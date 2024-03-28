@@ -1,0 +1,74 @@
+﻿@model List<Book>
+
+<table class="table table-responsive table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Book Name
+            </th>
+            <th>
+                Author Name
+            </th>
+            <th>
+                Rent Price
+            </th>
+            <th>
+                IaAvailable
+            </th>
+            <th>
+                Book Borrowing Date
+            </th>
+            <th>
+                Book Returning Date
+            </th>
+            <th>
+                Book Returning Time In Days
+            </th>
+            <th>
+                Genre
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RentPrice)
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => item.IsAvailable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookBorrowingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookReturningDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookReturningTimeInDays)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.GenreName)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                Total = @ViewBag.Total and No of Book is @ViewBag.Count
+
+
+            </td>
+        </tr>
+    </tfoot>
+</table>

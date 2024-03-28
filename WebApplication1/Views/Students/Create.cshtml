@@ -1,0 +1,137 @@
+﻿@model WebApplication1.Models.Student
+@inject LibraryDB db
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StudentName" class="control-label"></label>
+                <input asp-for="StudentName" class="form-control" />
+                <span asp-validation-for="StudentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactNo" class="control-label"></label>
+                <input asp-for="ContactNo" class="form-control" />
+                <span asp-validation-for="ContactNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" class="form-control" type="file" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+
+            <br />
+            <table class="table table-responsive table-hover table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <th>
+                            Book Name
+                        </th>
+                        <th>
+                            Author Name
+                        </th>
+                        <th>
+                            IsAvailable
+                        </th>
+                        <th>
+                            Rent Price
+                        </th>
+                        <th>
+                            Book Borrowing Date
+                        </th>
+                        <th>
+                            Book Returning Date
+                        </th>
+                        <th>
+                            Book Returning Time In Days
+                        </th>
+                        <th>
+                            Genre Type
+                        </th>
+                        <th>
+                            <input type="submit" value="Add" name="command" class="btn btn-success " />
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @for (int i = 0; i < Model.Books.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input asp-for="Books[i].BookTitle" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Books[i].AuthorName" class="form-control" />
+                            </td>
+                            <td>
+                                <input type="checkbox" asp-for="Books[i].IsAvailable" class="form-check-input" />
+                            </td>
+
+                            <td>
+                                <input asp-for="Books[i].RentPrice" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Books[i].BookBorrowingDate" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Books[i].BookReturningDate" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Books[i].BookReturningTimeInDays" class="form-control" />
+                            </td>
+                            <td>
+                                <select asp-for="Books[i].GenreId" asp-items="db.Genres.Select(p=> new SelectListItem(){Text = p.GenreName,Value = p.GenreId.ToString() })">
+                                </select>
+                            </td>
+                            <td>
+                                <button value="delete-@i" name="command">Delete</button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+
+            </table>
+            <br />
+            
+            <hr />
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
